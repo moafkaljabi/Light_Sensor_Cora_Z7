@@ -6,7 +6,7 @@
 -- Create Date: 06/09/2025 10:52:13 PM
 -- Design Name: 
 --   FileName:  spi_master.vhd
--- Module Name: counter - Behavioral
+-- Module Name: counter - logic
 -- Project Name: 
 -- Target Devices: 
 -- Tool Versions: 
