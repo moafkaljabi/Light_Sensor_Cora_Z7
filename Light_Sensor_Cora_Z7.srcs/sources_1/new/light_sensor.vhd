@@ -4,24 +4,28 @@
 -- Engineer: Moafk Aljabi
 -- 
 -- Create Date: 06/09/2025 10:52:13 PM
--- Module Name: ambient_light_sensor.vhd
+-- Module Name: light_sensor.vhd
+-- Design Name: 
+-- Module Name: light_sensor - Behavioral
 -- Project Name: 
--- Target Devices: 
+-- Target Devices: Cora-Z7
 -- Tool Versions: 
 -- Description: 
 -- 
--- Dependencies: spi_master
+-- Dependencies: 
 -- 
 -- Revision:
 -- Revision 0.01 - File Created
 -- Additional Comments:
 -- 
-----------------------------------------------------------------------------------
+----------------------------------------------------------------
+
+
 
 LIBRARY ieee;
 USE ieee.std_logic_1164.all;
 
-ENTITY ambient_light_sensor IS
+ENTITY light_sensor IS
     GENERIC(
         spi_clk_div :   INTEGER := 13);  -- spi_clk_div = clk/8 (answer rounded up, clk in MHz)
     PORT(
@@ -31,9 +35,9 @@ ENTITY ambient_light_sensor IS
         sclk        :   BUFFER  STD_LOGIC;                          --SPI clock
         ss_n        :   BUFFER  STD_LOGIC_VECTOR(0 DOWNTO 0);       --SPI slave select
         als_data    :   OUT     STD_LOGIC_VECTOR(7 DOWNTO 0));      --ambient light sensor data
-END ambient_light_sensor;
+END light_sensor;
 
-ARCHITECTURE behavior OF ambient_light_sensor IS
+ARCHITECTURE Behavioral OF light_sensor IS
     SIGNAL   spi_rx_data    : STD_LOGIC_VECTOR(15 DOWNTO 0);    --latest data received by SPI
 
     --declare SPI Master component
@@ -64,12 +68,24 @@ BEGIN
   --instantiate and configure the SPI Master component
   spi_master_0:  spi_master
      GENERIC MAP(slaves => 1, d_width => 16)
-     PORT MAP(clock => clk, reset_n => reset_n, enable => '1', cpol => '1',
-           cpha => '1', cont => '0', clk_div => spi_clk_div, addr => 0,
-           tx_data => (OTHERS => '0'), miso => miso, sclk => sclk, ss_n => ss_n,
-           mosi => open, busy => open, rx_data => spi_rx_data);
+     PORT MAP(
+        clock => clk, 
+        reset_n => reset_n, 
+        enable => '1',
+        cpol => '1',
+        cpha => '1',
+        cont => '0',
+        clk_div => spi_clk_div, 
+        addr => 0,
+        tx_data => (OTHERS => '0'),
+        miso => miso, 
+        sclk => sclk,
+        ss_n => ss_n,
+        mosi => open,
+        busy => open,
+        rx_data => spi_rx_data);
 
     als_data <= spi_rx_data(12 DOWNTO 5);   --assign ambient light data bits to output
 
 
-END behavior;
+END Behavioral;
