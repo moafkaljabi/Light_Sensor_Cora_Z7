@@ -40,14 +40,19 @@ end ambient_light_display;
 architecture rtl of ambient_light_display is
 
   signal als_data_sig : std_logic_vector(7 downto 0);
+  signal reset_n_internal : std_logic;
 
+  
 begin
+
+    -- Internal signals 
+    reset_n_internal <= not reset_n;  -- Button pressed ('0') → reset active ('0')
 
   -- instantiate your existing light_sensor (which instantiates spi_master)
   sensor_inst : entity work.light_sensor
     port map (
       clk      => clk,
-      reset_n  => reset_n,
+      reset_n  => reset_n_internal,
       miso     => miso,
       sclk     => sclk,
       ss_n     => ss_n,
@@ -62,7 +67,7 @@ begin
     )
     port map (
       clk       => clk,
-      reset_n   => reset_n,
+      reset_n   => reset_n_internal,
       data_in   => als_data_sig,
       seg_out   => seg_out,
       digit_sel => digit_sel
