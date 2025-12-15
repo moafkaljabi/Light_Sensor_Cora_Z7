@@ -1,6 +1,6 @@
 --------------------------------------------------------------------------------
 --
--- Company: Astraspecs
+-- Company:
 -- Engineer: Moafk Aljabi
 -- Create Date: 10/07/2025 02:07:22 AM
 -- Design Name: 

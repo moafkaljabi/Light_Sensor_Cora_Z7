@@ -1,5 +1,5 @@
 --------------------------------------------------------------------------------
--- Company: Astraspecs
+-- Company:
 -- Engineer: Moafk Aljabi
 --
 -- Target Devices: Cora-Z7
@@ -87,7 +87,7 @@ begin
         refresh_cnt <= refresh_cnt + 1;
       end if;
 
-      -- fast PWM counter (wrap-around naturally)
+      -- PWM counter
       pwm_counter <= pwm_counter + 1;
     end if;
   end process;
